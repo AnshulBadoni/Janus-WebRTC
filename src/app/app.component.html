@@ -1,0 +1,32 @@
+
+<header class="size-full max-h-16 shadow-md flex justify-center">
+  <div class=" flex justify-between gap-2 items-center max-w-xl">
+    <button nz-button nzType="primary" (click)="createRoom()" [nzLoading]="isLoading">Create a room</button>
+    <nz-input-group >
+      <input type="text" placeholder="room number..." nz-input [(ngModel)]="roomId"/>
+    </nz-input-group>
+    <button nz-button nzType="primary" (click)="joinAsRemoteRoom()" [nzLoading]="isJoining">Join a room</button>
+  </div>
+</header>
+
+<!-- <video autoPlay playsInline #screenShare class="screen-share"></video> -->
+<div id="container" class="bg-[red]"></div>
+<div class="flex flex-wrap items-center m-3 gap-3">
+  <video autoPlay playsInline #videoElement class="w-[372px] h-[280px] rounded-md border-red-400" ></video>
+  @for (item of remoteUserStream; track $index) {
+    <div class=" flex flex-col">
+      <video autoPlay playsInline #remoteVideo [srcObject]="item.stream" class="w-[372px] h-[280px] rounded-md" [ngClass]="{'outline-2 outline-double outline-blue-800': item.talking}"></video>
+      <!-- <button (click)="toggleRemoteUserMic(item)">Mic off</button> -->
+      <!-- <button (click)="toggleRemoteUserCam(item)">Cam on</button> -->
+    </div>
+  }
+</div>
+
+
+  @for (item of remoteUserAudioStream; track $index) {
+    <h1>{{item.id}}</h1>
+    <div class=" flex flex-col">
+      <audio autoPlay playsInline [srcObject]="item.stream"></audio>
+      <button (click)="toggleRemoteUserMic(item)">Mic off</button>
+    </div>
+  }
